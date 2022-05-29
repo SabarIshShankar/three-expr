@@ -19,6 +19,7 @@ export default function App() {
       dpr={[1, 2]}
       camera={{ position: [-7.5, 0, -7.5], fov: 35 }}
     >
+      <Lamborghini scale={0.015} />
       <spotLight
         position={[0, 15, 0]}
         angle={0.25}
@@ -115,5 +116,42 @@ export default function App() {
         maxPolarAngle={Math.PI / 2.4}
       />
     </Canvas>
+  );
+}
+
+function Lamborghini(props) {
+  const { scene, nodes, materials } = useGLTF("/lambo.glb");
+
+  useMemo(() => {
+    Object.values(nodes).forEach((node) => {
+      if (node.isMesh) {
+        node.receiveShadow = node.castShadow = true;
+        if (node.name.startsWith("glass"))
+          node.geometry.computerVertexNormals();
+        if (node.name === "silver_001_BreakDiscs_0")
+          node.material = applyProps(materials.BreakDiscs.clone(), {
+            color: "#ddd"
+          });
+      }
+    });
+    nodes["glass_003"].scale.setScalar(2.7);
+  });
+}
+
+function Striplight(props) {
+  return (
+    <mesh {...props}>
+      <planeeometry />
+      <meshBasicMaterial color="white" toneMapped={false} />
+    </mesh>
+  );
+}
+
+function Ringlight(props) {
+  return (
+    <mesh {...props}>
+      <ringGeometry args={[1, 2, 64]} />
+      <meshBasicMaterial color="white" toneMapped={false} />
+    </mesh>
   );
 }
