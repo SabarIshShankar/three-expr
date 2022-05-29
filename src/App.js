@@ -135,7 +135,40 @@ function Lamborghini(props) {
       }
     });
     nodes["glass_003"].scale.setScalar(2.7);
-  });
+
+    applyProps(materials.FrameBlack, {
+      metalness: 0.5,
+      roughness: 1,
+      color: "black"
+    });
+    applyProps(materials.Chrome, {
+      metalness: 1,
+      roughness: 0.2,
+      color: "#333"
+    });
+    applyProps(materials.BreakDiscs, {
+      metalness: 0.2,
+      roughness: 0.2,
+      color: "#555"
+    });
+    applyProps(materials.TiresGum, { metalness: 0, color: "#333" });
+    applyProps(materials.GreyElements, { metalness: 0, color: "#292929" });
+    applyProps(materials.WhiteCar, {
+      roughness: 0.0,
+      metalness: 0.15,
+      color: "#555",
+      envMapIntensity: 2,
+      normalMap: new THREE.CanvasTexture(
+        new FlakesTexture(),
+        THREE.UVMapping,
+        THREE.RepeatWrapping,
+        THREE.RepeatWrapping
+      ),
+      "normalMap-repeat": [40, 40],
+      normalScale: [0.04, 0.04]
+    });
+  }, [nodes, materials]);
+  return <primitive object={scene} {...props} />;
 }
 
 function Striplight(props) {
