@@ -95,10 +95,10 @@ export default function App() {
         <mesh scale={100}>
           <sphereGeometry args={[1, 64, 64]} />
           <LayerMaterial side={THREE.BackSide}>
-            <Base color="#444" alpha={1} mode="normal" />
+            <Base color="#A6B9B7" alpha={1} mode="normal" />
             <Depth
-              colorA="hotpink"
-              colorB="#447"
+              colorA="hotblue"
+              colorB="#white"
               alpha={0.5}
               mode="normal"
               near={0}
@@ -109,12 +109,7 @@ export default function App() {
         </mesh>
       </Environment>
       <BakeShadows />
-      <OrbitControls
-        enablePan={false}
-        enableZoom={false}
-        minPolarAngle={Math.PI / 2.4}
-        maxPolarAngle={Math.PI / 2.4}
-      />
+      <OrbitControls enablePan={true} enableZoom={true} />
     </Canvas>
   );
 }
@@ -126,8 +121,7 @@ function Lamborghini(props) {
     Object.values(nodes).forEach((node) => {
       if (node.isMesh) {
         node.receiveShadow = node.castShadow = true;
-        if (node.name.startsWith("glass"))
-          node.geometry.computerVertexNormals();
+        if (node.name.startsWith("glass")) node.geometry.computeVertexNormals();
         if (node.name === "silver_001_BreakDiscs_0")
           node.material = applyProps(materials.BreakDiscs.clone(), {
             color: "#ddd"
@@ -144,19 +138,19 @@ function Lamborghini(props) {
     applyProps(materials.Chrome, {
       metalness: 1,
       roughness: 0.2,
-      color: "#333"
+      color: "#171717"
     });
     applyProps(materials.BreakDiscs, {
       metalness: 0.2,
       roughness: 0.2,
-      color: "#555"
+      color: "#171717"
     });
     applyProps(materials.TiresGum, { metalness: 0, color: "#333" });
-    applyProps(materials.GreyElements, { metalness: 0, color: "#292929" });
+    applyProps(materials.GreyElements, { metalness: 0, color: "#171717" });
     applyProps(materials.WhiteCar, {
       roughness: 0.0,
       metalness: 0.15,
-      color: "#555",
+      color: "#16340B",
       envMapIntensity: 2,
       normalMap: new THREE.CanvasTexture(
         new FlakesTexture(),
@@ -174,8 +168,8 @@ function Lamborghini(props) {
 function Striplight(props) {
   return (
     <mesh {...props}>
-      <planeeometry />
-      <meshBasicMaterial color="white" toneMapped={false} />
+      <planeGeometry />
+      <meshBasicMaterial color="#788690" toneMapped={false} />
     </mesh>
   );
 }
